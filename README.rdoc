@@ -1,30 +1,38 @@
-== Getting Started
+** bit sloppy, but here's my answers to first week's quiz **
 
-1. Make sure you have rails version 4. Type "rails -v" to make sure.
-2. From this project directory, do "bundle install --without production"
-3. To start the server "rails server".
-4. Navigate your browser to localhost:3000.
+Rails Week 1 Quiz
 
+  1. Why do they call it a relational database? Data in a table is organized via primary keys that uniquely identify each row in a table. Tables 'relate' to one another via a foreign key, a column of unique values that points to the primary keys of another table.
+  2. What is SQL? Structured Query Language used to manage and query data held in a relational database
+  3. There are two predominant views into a relational database. What are they, and how are they different? One view is to view the data as a table, similar to that in an Excel spreadsheet. Another view is to view each row of the table as an object that can be manipulated.
+  4. In a table, what do we call the column that serves as the main identifier for a row of data? We're looking for the general database term, not the column name. Primary key.
+  5. What is a foreign key, and how is it used? Foreign key is used to relate two separate tables, connecting the primary key of one table with the primary key of another.
+  6. At a high level, describe the ActiveRecord pattern. This has nothing to do with Rails, but the actual pattern that ActiveRecord uses to perform its ORM duties. In ActiveRecord, objects carry both persistent data and behavior which operates on that data. ORM (Object-Relational Mapping) is a technique that connects the objects of an application to tables in a relational database. Using ORM, the properties and relationships of the objects in an application can be easily stored and retrieved from a database without writing SQL statements directly. Tables become classes, rows become objects, and columns are instance variables
+  7. If there's an ActiveRecord model called "CrazyMonkey", what should the table name be? crazy_monkeys
+  8. If I'm building a 1:M association between Project and Issue, what will the model associations and foreign key be? class Project has_many: issues // class Issue belongs_to: project // foreign key is project_id
+  9. Given this codeclass Zoo < ActiveRecord::Base  has_many :animalsend
+  10. 
+      * What do you expect the other model to be and what does database schema look like? The other model should be Animal with database schema of belongs_to :zoo
+      * What are the methods that are now available to a zoo to call related to animals? 
+      * Zoo#animals(force_reload = false)
+      * Zoo#animals<<(animal)
+      * Zoo#animals.delete(animal)
+      * Zoo#animals.destroy(animal)
+      * Zoo#animals=objects
+      * Zoo#animals.clear
+      * Zoo#animals.empty?
+      * Zoo#animals.size
+      * Zoo#animals.find(...)
+      * Zoo#animals.where(...)
+      * Zoo#animals.exists?(...)
+      * Zoo#animals.build(attributes = {}, ...)
+      * Zoo#animals.create(attributes = {})
+      * How do I create an animal called "jumpster" in a zoo called "San Diego Zoo"? sdzoo = Zoo.create(name: 'San Diego Zoo') // sdzoo.animals << Animal.create(name: 'jumpster')
+  11. What is mass assignment? What's the non-mass assignment way of setting values? One can set multiple attributes at once (usually via a hash). The non-mass assignment way is setting values individually.
+  12. What does this code do? Animal.first #returns the first object in the Animal model
+  13. If I have a table called "animals" with columns called "name", and a model called Animal, how do I instantiate an animal object with name set to "Joe". Which methods makes sure it saves to the database? Animal.create(name: 'Joe') // create method  or .new and then .save
+  14. How does a M:M association work at the database level? M:M usually works through a third model (join table) that links the two models that have an M:M association. That 'third' model belongs_to both of other two models, and the other two models use the method 'has_many :other_model'
+  15. What are the two ways to support a M:M association at the ActiveRecord model level? Pros and cons of each approach? has_and_belongs_to_many and has_many :through // Pros for habtm -- don't need to create a separate join table. Cons for habtm -- can't add attributes to the join model // Pros for has_many :through -- can access attributes of each other's models. Cons -- need to create an explicit join table
+  16. Suppose we have a User model and a Group model, and we have a M:M association all set up. How do we associate the two?
 
-== Setting up with Git
-
-1. Instantiate this directory as a git repository with "git init".
-2. Go to github.com, create a new repository, then follow instructions on how to add a remote repository that links to github.
-3. Remember, you have to "git add" changes to ready it for a commit, then "git commit" to commit those changes locally, then "git push origin master" to push it to the remote "origin" repository, which is the previously created github.com repository.
-
-== Deploying to Heroku
-
-1. Download the Heroku Toolbelt.
-2. Go to Heroku.com and register.
-3. Issue "heroku login" to authenticate, with the credentials from previous step. Make sure it's a git repository, by issuing "git init", and also "git add", "git commit" your files.
-4. Then "heroku create" to create this app on heroku. This command also adds a "heroku" remote repository that you can push to.
-5. To deploy, issue "git push heroku master".
-6. You may need to run migrations on heroku afterwards, with "heroku run rake db:migrate".
-7. Other helpful heroku commands:
-  - heroku logs
-  - heroku logs -t
-  - heroku rename
-  - heroku restart
-  - heroku run console
-  - heroku help
-
+setup join table called memberships that belongs_to :group and belongs to :user. In the User model, has_many :memberships <\n> has_many :groups, through :group_user. In the Group model, has_many :memberships <\n> has_many :users, through :group_user
