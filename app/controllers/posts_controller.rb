@@ -6,4 +6,43 @@ class PostsController < ApplicationController
   def show
     @post = Post.find(params[:id])
   end
+
+  def new
+    @post = Post.first
+  end
+
+  def create
+    @post = Post.new(post_params)
+
+    if @post.save
+      flash[:notice] = "Your post was created"
+      redirect_to posts_path
+    else # validation error
+      render :new
+    end
+  end
+
+  def edit
+    @post = Post.find(params[:id])
+  end
+
+  def update
+    @post = Post.find(params[:id])
+
+    if @post.update(post_params)
+      flash[:notice] = "The post was updated"
+      redirect_to posts_path
+    else
+      render :edit
+    end
+  end
+
+  private
+
+  def post_params
+    # params.require(:post).permit(:title, :url)
+    params.require(:post).permit!
+  end
+
+  
 end
