@@ -7,8 +7,8 @@
   </tr>
 <% @posts.each do |post| %>
   <tr>
-    <td><%= post.title %></td>
-    <td><%= post.url %></td>
+    <td><%= link_to post.title, post_path(post) %></td>
+    <td><%= link_to post.url, 'http://#{post.url}' %></td>
     <td><%= link_to '(edit)', edit_post_path(post) %></td>
   </tr>
 <% end %>

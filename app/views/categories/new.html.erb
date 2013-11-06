@@ -1,5 +1,7 @@
 <h4>New Category</h4>
 
+<% render 'shared/validation', {object: @category} %>
+
 <%= form_for @category do |f| %>
   <%= f.label :name, 'Name' %>
   <%= f.text_field :name %>

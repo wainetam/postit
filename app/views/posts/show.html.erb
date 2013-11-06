@@ -1,3 +1,28 @@
-<h3>Welcome!</h3>
-
 <p>This is the Postit template. You've access the PostsController, show action. This is the show template. Find me under app/views/posts folder.</p>
+
+<h4><%= @post.title %></h4>
+<hr>
+<%= link_to @post.url, 'http://#{@post.url}' %>
+<hr>
+<%= render 'shared/validation', {object: @comment} %>
+<%= form_for @comment, url: post_comments_path(@post.id) do |f| %>
+  <%= f.label :body, 'Leave a Comment' %>
+  <%= f.text_area :body %>
+  <br />
+  <%= f.submit 'Create Comment', class: 'btn btn-primary' %>
+<% end %>
+
+<% if @post.comments.any? %>
+  <div class=''>
+    <h5>Comments:</h5>
+    <ul>
+    <% @post.comments.each do |c| %>
+      <li><%= c.body %></li>
+    <% end %>
+    </ul>
+  </div>  
+<% end %>
+
+<!-- url: post_comments_path -->
+<!-- action: 'create', post_id: @post.id, controller: 'comments' -->
+<!-- argument you pass into post_comments_path -->

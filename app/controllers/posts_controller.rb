@@ -5,6 +5,9 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
+    # @comment = Comment.new
+    @comment = @post.comments.new
+
   end
 
   def new
@@ -15,7 +18,7 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
 
     if @post.save
-      flash[:notice] = "Your post was created"
+      flash[:notice] = 'Your post was created'
       redirect_to posts_path
     else # validation error
       render :new
@@ -30,7 +33,7 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
 
     if @post.update(post_params)
-      flash[:notice] = "The post was updated"
+      flash[:notice] = 'The post was updated'
       redirect_to posts_path
     else
       render :edit
