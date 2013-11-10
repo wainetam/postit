@@ -1,15 +1,1 @@
-<h4>Welcome!</h4>
-
-<table>
-  <tr>
-    <th>Title</th>
-    <th>URL</th>
-  </tr>
-<% @posts.each do |post| %>
-  <tr>
-    <td><%= link_to post.title, post_path(post) %></td>
-    <td><%= link_to post.url, 'http://#{post.url}' %></td>
-    <td><%= link_to '(edit)', edit_post_path(post) %></td>
-  </tr>
-<% end %>
-</table>
+<%= render 'shared/index', object: @posts %>

@@ -1,10 +1,12 @@
 class PostsController < ApplicationController
+  before_action :set_post, only: [:show, :edit, :update]
+
   def index
     @posts = Post.all
   end
 
   def show
-    @post = Post.find(params[:id])
+    # @post = Post.find(params[:id]) in before action now
     # @comment = Comment.new
     @comment = @post.comments.new
 
@@ -12,6 +14,8 @@ class PostsController < ApplicationController
 
   def new
     @post = Post.new
+    # do i need a category instance var?
+    @categories = Category.all
   end
 
   def create
@@ -26,11 +30,13 @@ class PostsController < ApplicationController
   end
 
   def edit
-    @post = Post.find(params[:id])
+    # @post = Post.find(params[:id]) in before action now
+    # do i need a category instance var?
+    @categories = Category.all
   end
 
   def update
-    @post = Post.find(params[:id])
+    # @post = Post.find(params[:id]) in before action now
 
     if @post.update(post_params)
       flash[:notice] = 'The post was updated'
@@ -41,6 +47,10 @@ class PostsController < ApplicationController
   end
 
   private
+
+  def set_post
+    @post = Post.find(params[:id])
+  end
 
   def post_params
     # params.require(:post).permit(:title, :url)

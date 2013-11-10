@@ -1,0 +1,25 @@
+<% if @category %>
+<h4>All Posts >> <%= @category.name %></h4>
+<% else %>
+<h4>All Posts</h4>
+<% end %>
+<hr>
+<table>
+  <tr>
+    <th>Title</th>
+    <th>URL</th>
+    <th>Categories</th>
+  </tr>
+<% object.each do |post| %>
+  <tr>
+    <td><%= link_to post.title, post_path(post) %></td>
+    <td><%= link_to post.url, fix_url(post.url) %></td>
+    <td>
+      <% post.category_ids.each do |id| %>
+      <%= link_to Category.find(id).name, category_path(Category.find(id).name) %>
+      <% end %>
+    </td> 
+    <td><%= link_to '(edit)', edit_post_path(post) %></td>
+  </tr>
+<% end %>
+</table>

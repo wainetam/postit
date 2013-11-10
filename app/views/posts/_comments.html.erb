@@ -1,0 +1,8 @@
+<% if @post.comments.any? %>
+  <h5>Comments:</h5>
+  <ul>
+    <% @post.comments.each do |c| %>
+      <li><%= c.body %></li>
+    <% end %>
+  </ul>
+<% end %>

@@ -5,9 +5,8 @@ class CommentsController < ApplicationController
 
   def create
     # @post = Post.find(params[:id])
-    @post = Post.find(params[:post_id])
-    # @comment = Comment.new
-    # @comment = Comment.find(comment_params)
+    # debugger
+    @post = Post.find(params[:post_id]) # find function takes an id
     @comment = @post.comments.create(comment_params)
 
     if @comment.save
@@ -16,7 +15,7 @@ class CommentsController < ApplicationController
     else
       # debugger
       render 'posts/show' 
-      # render posts_path(@post)
+      # render post_path(@post)
     end
   end
 
