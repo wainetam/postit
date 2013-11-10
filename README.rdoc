@@ -36,5 +36,37 @@ Rails Week 1 Quiz
   13. How does a M:M association work at the database level? M:M usually works through a third model (join table) that links the two models that have an M:M association. That 'third' model belongs_to both of other two models, and the other two models use the method 'has_many :other_model'
   14. What are the two ways to support a M:M association at the ActiveRecord model level? Pros and cons of each approach? has_and_belongs_to_many and has_many :through // Pros for habtm -- don't need to create a separate join table. Cons for habtm -- can't add attributes to the join model // Pros for has_many :through -- can access attributes of each other's models. Cons -- need to create an explicit join table
   15. Suppose we have a User model and a Group model, and we have a M:M association all set up. How do we associate the two?
+  set up a join table called memberships that belongs_to :group and belongs to :user. In the User model, has_many :memberships <\n> has_many :groups, through :group_user. In the Group model, has_many :memberships <\n> has_many :users, through :group_user
+  
+WEEK 2 QUIZ
+Name all the 7 (or 8) routes exposed by the resources keyword in the routes.rb file. Also name the 4 named routes, and how the request is routed to the controller/action. The 7/8 routes are: Index, New, Create, Show, Edit, Update (patch/put), Destroy. The 4 named routes are: Index, New, Edit, Show. The request is routed to the controller/action by naming the route and adding an underscore _path to the named route and adding any necessary parameter. i.e., the named path for posts#index is posts_path()
 
-setup join table called memberships that belongs_to :group and belongs to :user. In the User model, has_many :memberships <\n> has_many :groups, through :group_user. In the Group model, has_many :memberships <\n> has_many :users, through :group_user
+What is REST and how does it relate to the resources routes?
+REST is Representational State Transfer. It relies on a stateless communications protocol such as HTTP. It is generally an architectural style and philosophy that treats objects as resources to be created/edited/destroyed.
+
+What's the major difference between model backed and non-model backed form helpers?
+The major difference is that you can associate forms with objects directly with model-backed forms. With non-model backed forms, you are not accessing attributes of objects or the model. One such usage would be a general search form.
+
+How does form_for know how to build the <form> element?
+form_for yields a form builder object, typically specificed with an 'f' variable. Methods to create form controls are called on the form builder object 'f'.
+
+What's the general pattern we use in the actions that handle submission of model-backed forms (ie, the create and udpate actions)?
+
+
+How exactly do Rails validations get triggered? Where are the errors saved? How do we show the validation messages on the user interface?
+Rails validations get triggered by create, editing, or updating actions. Active Record confirms that objects are valid before saving to the database. Errors get saved in an array associated with the object. To display the validation messages, we loop through `errors` array and call the `full_messages` method on each element (if any).
+
+What are Rails helpers?
+Helpers are methods that can be reused throughout the application.
+
+What are Rails partials?
+Rails partials allow you to reuse common HTML/erb code to DRY out your rails application.
+
+When do we use partials vs helpers?
+Helpers are methods that can be reused throughout the application. Partials are reusable code for views (HTML/erb code)
+
+When do we use non-model backed forms?
+When we want to create forms that do not access attributes of objects or the model. Such as search forms or general form/data  submission that doesn't touch any models.
+  
+  
+  
