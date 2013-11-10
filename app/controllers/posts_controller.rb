@@ -9,7 +9,6 @@ class PostsController < ApplicationController
     # @post = Post.find(params[:id]) in before action now
     # @comment = Comment.new
     @comment = @post.comments.new
-
   end
 
   def new
@@ -56,6 +55,4 @@ class PostsController < ApplicationController
     # params.require(:post).permit(:title, :url)
     params.require(:post).permit!
   end
-
-  
 end

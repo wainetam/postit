@@ -7,19 +7,24 @@
 <table>
   <tr>
     <th>Title</th>
+    <th></th>
     <th>URL</th>
     <th>Categories</th>
+    <th>Posted by</th>
+    <th>Comments</th>
   </tr>
 <% object.each do |post| %>
   <tr>
     <td><%= link_to post.title, post_path(post) %></td>
+    <td><%= link_to '(edit)', edit_post_path(post) %></td>
     <td><%= link_to post.url, fix_url(post.url) %></td>
     <td>
       <% post.category_ids.each do |id| %>
       <%= link_to Category.find(id).name, category_path(Category.find(id).name) %>
       <% end %>
     </td> 
-    <td><%= link_to '(edit)', edit_post_path(post) %></td>
+    <td><%= post.creator.username.to_s + " on " + display_time(post.created_at) %></td>
+    <td><%= link_to post.comments.size.to_s + " comments", post_path(post) %></td>  
   </tr>
 <% end %>
 </table>

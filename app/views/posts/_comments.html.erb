@@ -1,8 +1,12 @@
 <% if @post.comments.any? %>
   <h5>Comments:</h5>
-  <ul>
     <% @post.comments.each do |c| %>
-      <li><%= c.body %></li>
+      <div>
+        <%= c.body %> 
+        <%= c.created_at %>
+      </div>
     <% end %>
-  </ul>
 <% end %>
+
+<!-- "by " + c.creator.username +  -->
+<!-- can't use display_time function -->

@@ -1,6 +1,6 @@
 <% if @post.category_ids.any? %>
   <% @post.category_ids.each do |id| %>
-    <h5><%= link_to Category.find(id).name, category_path(Category.find(id).name) %></h5>
+    <span class="badge"><%= link_to Category.find(id).name, category_path(Category.find(id).name) %></span>
   <% end %>
 <% end %>
 
@@ -11,7 +11,7 @@
 <%= link_to @post.url, fix_url(@post.url) %>
 <hr>
 
-<%= render 'shared/validation', {object: @comment} %>
+<%= render 'shared/validation', object: @comment %>
 
 <%= form_for @comment, url: post_comments_path(@post.id) do |f| %>
   <%= f.label :body, 'Leave a Comment' %>
