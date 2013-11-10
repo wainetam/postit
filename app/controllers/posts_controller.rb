@@ -9,6 +9,7 @@ class PostsController < ApplicationController
     # @post = Post.find(params[:id]) in before action now
     # @comment = Comment.new
     @comment = @post.comments.new
+    @post.comments.reload # why?
   end
 
   def new
@@ -19,6 +20,7 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
+    @post.user_id = 1 # default user as Waine
 
     if @post.save
       flash[:notice] = 'Your post was created'

@@ -1,21 +1,18 @@
 class CommentsController < ApplicationController
-  # def new
-  #   @comment = Comment.new
-  # end
 
   def create
     # @post = Post.find(params[:id])
     # debugger
     @post = Post.find(params[:post_id]) # find function takes an id
-    @comment = @post.comments.create(comment_params)
-
+    @comment = @post.comments.new(comment_params)
+    @comment.user_id = 1 # default user as Waine
+    
     if @comment.save
       flash[:notice] = 'Your comment was added.'
       redirect_to post_path(@post) #posts/:id
     else
-      # debugger
-      render 'posts/show' 
-      # render post_path(@post)
+      @post.comments.reload # why?
+      render 'posts/show'
     end
   end
 

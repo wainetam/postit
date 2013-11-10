@@ -11,7 +11,7 @@
 <%= link_to @post.url, fix_url(@post.url) %>
 <hr>
 
-<%= render 'shared/validation', object: @comment %>
+<%= render 'shared/validation', {object: @comment} %>
 
 <%= form_for @comment, url: post_comments_path(@post.id) do |f| %>
   <%= f.label :body, 'Leave a Comment' %>
@@ -20,7 +20,7 @@
   <%= f.submit 'Create Comment', class: 'btn btn-primary' %>
 <% end %>
 
-<%= render 'comments' %>
+<%= render 'posts/comments' %>
 
 
 <!-- url: post_comments_path -->

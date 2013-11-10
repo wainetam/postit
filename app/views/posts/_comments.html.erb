@@ -1,9 +1,10 @@
 <% if @post.comments.any? %>
   <h5>Comments:</h5>
     <% @post.comments.each do |c| %>
-      <div>
+      <div class='well span8'>
         <%= c.body %> 
-        <%= c.created_at %>
+        <br />
+        <%= " by " + c.creator.username.to_s + " on " + display_time(c.created_at).to_s %>
       </div>
     <% end %>
 <% end %>
