@@ -4,6 +4,13 @@ PostitTemplate::Application.routes.draw do
     resources :comments, only: [:create, :new]
   end
   resources :categories, param: :name, except: [:destroy, :edit, :update, :index]
+  resources :users, only: [:new, :create, :show, :update, :edit]
+
+  get '/register', to: 'users#new'
+  post '/register', to: 'users#create'
+
+  get '/login', to: 'sessions#new'
+  get '/logout', to: 'sessions#destroy'
   # add param: :name, -- can sort :name vs :id
   # get '/categories/new', to: 'categories#new'
   # post '/categories/new', to: 'categories#create'

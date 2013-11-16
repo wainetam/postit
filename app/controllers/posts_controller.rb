@@ -6,19 +6,18 @@ class PostsController < ApplicationController
   end
 
   def show
-    # @post = Post.find(params[:id]) in before action now
-    # @comment = Comment.new
-    @comment = @post.comments.new
-    @post.comments.reload # why?
+    @comment = Comment.new
+    # @comment = @post.comments.new
+    # @post.comments.reload # why?
   end
 
   def new
-    @post = Post.new
-    # do i need a category instance var?
     @categories = Category.all
+    @post = Post.new
   end
 
   def create
+    @categories = Category.all
     @post = Post.new(post_params)
     @post.user_id = 1 # default user as Waine
 

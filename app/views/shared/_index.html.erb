@@ -7,11 +7,13 @@
 
 <% object.each do |post| %>
 <div class="span8 well">
-  <% post.category_ids.each do |id| %>
-  <span class="badge"><%= link_to Category.find(id).name, category_path(Category.find(id).name) %></span>
+  <% if post.category_ids.any? %>
+    <% post.category_ids.each do |id| %>
+    <span class="badge"><%= link_to Category.find(id).name, category_path(Category.find(id).name) %></span>
+    <% end %>
   <br />
   <% end %> 
-
+  
   <b><%= link_to post.title, post_path(post) %></b>
   <%= link_to '(edit)', edit_post_path(post) %>
   <br />
