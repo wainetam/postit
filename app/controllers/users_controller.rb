@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     # @user = User.new(params[:creator])
     @user = User.new(params[user_params])
     # @user = User.new
-    debugger
+    # debugger
 
     if @user.save
       flash[:notice] = "Thank you for registering, #{@user.username}"
