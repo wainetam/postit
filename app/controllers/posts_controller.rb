@@ -1,5 +1,7 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update]
+  before_action :require_login, except: [:index, :show]
+  before_action :require_login_by_id, only: [:edit]
 
   def index
     @posts = Post.all
@@ -19,7 +21,7 @@ class PostsController < ApplicationController
   def create
     @categories = Category.all
     @post = Post.new(post_params)
-    @post.user_id = 1 # default user as Waine
+    @post.user_id = session[:user_id]
 
     if @post.save
       flash[:notice] = 'Your post was created'
@@ -32,7 +34,10 @@ class PostsController < ApplicationController
   def edit
     # @post = Post.find(params[:id]) in before action now
     # do i need a category instance var?
+    # debugger
     @categories = Category.all
+    # @post = Post.find(params[:id])
+
   end
 
   def update
@@ -56,4 +61,11 @@ class PostsController < ApplicationController
     # params.require(:post).permit(:title, :url)
     params.require(:post).permit!
   end
+
+  def require_login_by_id
+    unless logged_in_as_post_creator?(@post)
+      flash[:error] = "You need to login as the content creator to complete that action"
+      redirect_to login_path
+    end
+  end      
 end

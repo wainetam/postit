@@ -15,7 +15,9 @@
   <% end %> 
   
   <b><%= link_to post.title, post_path(post) %></b>
-  <%= link_to '(edit)', edit_post_path(post) %>
+  <% if logged_in_as_post_creator?(post) %>
+    <%= link_to '(edit)', edit_post_path(post) %>
+  <% end %>
   <br />
   <%= link_to post.url, fix_url(post.url) %>
   <br /> 

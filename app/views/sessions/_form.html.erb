@@ -1,0 +1,13 @@
+<div class="well">
+<%= form_tag '/login', method: 'post' %>
+  <%= label_tag :username, 'Username' %>
+  <%= text_field_tag :username %>
+  <br />
+
+  <%= label_tag :password, 'Password' %>
+  <%= text_field_tag :password %>
+  <br />
+  <br />
+  <!-- f.submit 'Register', class: 'btn btn-primary' -->
+  <%= submit_tag "Login", class: 'btn btn-primary' %>
+</div>

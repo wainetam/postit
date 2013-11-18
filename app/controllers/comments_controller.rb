@@ -5,7 +5,7 @@ class CommentsController < ApplicationController
     # debugger
     @post = Post.find(params[:post_id]) # find function takes an id
     @comment = @post.comments.new(comment_params)
-    @comment.user_id = 1 # default user as Waine
+    @comment.user_id = session[:user_id] # default user as Waine
     
     if @comment.save
       flash[:notice] = 'Your comment was added.'
