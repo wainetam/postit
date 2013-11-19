@@ -1,7 +1,15 @@
 PostitTemplate::Application.routes.draw do
   root to: 'posts#index'
   resources :posts, param: :id, except: [:destroy] do
-    resources :comments, only: [:create, :new]
+    member do
+      post :vote # expose route to every member of resource
+      # post :downvote # expose route to every member of resource
+    end
+    resources :comments, only: [:create, :new] do
+      member do
+        post :vote
+      end
+    end
   end
   resources :categories, param: :name, except: [:destroy, :edit, :update, :index]
   resources :users, only: [:new, :create, :show, :update, :edit]

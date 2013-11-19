@@ -15,10 +15,19 @@ module ApplicationHelper
     end
   end
 
-  def logged_in_as_post_creator?(obj)
+  # def vote_count(element)
+  #   Vote.where(:voteable_id => element.id, :vote => 't').length - 
+  #     Vote.where(:voteable_id => element.id, :vote => 'f').length
+  # end
+
+  def logged_in_as_creator?(obj)
+    # debugger
+    # if obj == "@user" and session[:user_id] == obj.id
+    #   true
     if session[:user_id] == obj.user_id
       true
     else
+      # debugger
       false
     end
   end

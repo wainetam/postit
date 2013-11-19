@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :require_login, except: [:new, :show]
+  # before_action :require_login_by_id, only: [:edit]
 
   def new
     @user = User.new
@@ -21,6 +22,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    # debugger
   end
 
   def edit
@@ -38,7 +40,7 @@ class UsersController < ApplicationController
     end
   end
 
-  # private
+  private
 
   def user_params
   #   # params.require(:post).permit(:title, :url)
@@ -46,5 +48,12 @@ class UsersController < ApplicationController
     # params.require(:creator).permit!
     params.require(:user).permit(:username, :password, :created_at, :updated_at)
   end
+
+  def require_login_by_id
+    unless logged_in_as_creator?(@user)
+      flash[:error] = "You need to login as the user to complete that action"
+      redirect_to login_path
+    end
+  end    
 
 end

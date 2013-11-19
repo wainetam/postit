@@ -1,0 +1,37 @@
+<% object.each do |post| %>
+<div class="row">
+  <div class="span0 well text-center">
+    <% if logged_in? %>
+      <%= link_to vote_post_path(post, vote: true), method: 'post' do %>
+        <i class='icon-arrow-up'></i>
+        <br />
+      <% end %>
+    <% end %>
+    <%= post.total_votes.to_s + " votes" %>
+    <% if logged_in? %>
+      <br />
+      <%= link_to vote_post_path(post, vote: false), method: 'post' do %>
+        <i class='icon-arrow-down'></i>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="span8 well">
+    <% if post.category_ids.any? %>
+      <% post.category_ids.each do |id| %>
+      <span class="badge"><%= link_to Category.find(id).name, category_path(Category.find(id).name) %></span>
+      <% end %>
+    <br />
+    <% end %> 
+    <b><%= link_to post.title, post_path(post) %></b>
+    <% if logged_in_as_creator?(post) %>
+      <%= link_to '(edit)', edit_post_path(post) %>
+    <% end %>
+    <br />
+    <%= link_to post.url, fix_url(post.url) %>
+    <br /> 
+    <%= link_to post.creator.username.to_s + " on " + display_time(post.created_at),  user_path(post.creator) %>
+    <br />
+    <%= link_to post.comments.size.to_s + " comments", post_path(post) %>
+  </div>
+</div>
+<% end %>

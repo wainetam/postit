@@ -1,0 +1,30 @@
+<% if object.comments.any? %>
+  <h5>Comments:</h5>
+    <% object.comments.each do |c| %>
+      <div class="row">
+        <div class="span0 well text-center comment_votes">
+          <% if logged_in? %>  
+            <%= link_to vote_post_comment_path(c.post, c, vote: true), method: 'post' do %>
+              <i class='icon-arrow-up'></i>
+              <br />
+            <% end %>
+          <% end %>
+          <%= c.total_votes.to_s + " votes" %>
+          <% if logged_in? %>
+            <br />
+            <%= link_to vote_post_comment_path(c.post, c, vote: false), method: 'post' do %>
+              <i class='icon-arrow-down'></i>
+            <% end %>
+          <% end %>
+        </div>
+        <div class='well span8'>
+          <%= c.body %> 
+          <br />
+          <%= link_to c.creator.username.to_s + " on " + display_time(c.created_at).to_s, user_path(c.creator) %>
+        </div>
+      </div>
+    <% end %>
+<% end %>
+
+<!-- "by " + c.creator.username +  -->
+<!-- can't use display_time function -->

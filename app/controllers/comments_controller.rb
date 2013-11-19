@@ -1,8 +1,9 @@
 class CommentsController < ApplicationController
-
+  before_action :require_login, except: [:index, :show]
+  before_action :set_post, only: [:vote]
+  before_action :one_vote_per_user, only: [:vote]
+  
   def create
-    # @post = Post.find(params[:id])
-    # debugger
     @post = Post.find(params[:post_id]) # find function takes an id
     @comment = @post.comments.new(comment_params)
     @comment.user_id = session[:user_id] # default user as Waine
@@ -16,9 +17,36 @@ class CommentsController < ApplicationController
     end
   end
 
+  def vote
+    @vote = Vote.create(voteable: @comment, vote: params[:vote], user_id: session[:user_id], voteable_id: params[:id])
+    
+    if @vote.valid?
+      flash[:notice] = "Your vote was counted" 
+    else 
+      flash[:error] = "Your vote was not counted. Something went wrong" 
+    end
+    redirect_to :back
+  end
+
   private
 
   def comment_params
     params.require(:comment).permit!
   end
+
+  def set_post
+    @comment = Comment.find(params[:id])
+  end
+
+  def one_vote_per_user
+    vote_array = @comment.votes
+    vote_array.each do |vote_obj|
+      if session[:user_id] == vote_obj.user_id  
+        vote_obj.errors.add(:vote, "User can't vote more than once to same content")
+        flash[:error] = "You already voted!"
+        redirect_to :back and return
+      end  
+    end
+  end
+
 end

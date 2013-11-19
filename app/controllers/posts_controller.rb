@@ -1,7 +1,8 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: [:show, :edit, :update]
+  before_action :set_post, only: [:show, :edit, :update, :vote]
   before_action :require_login, except: [:index, :show]
   before_action :require_login_by_id, only: [:edit]
+  before_action :one_vote_per_user, only: [:vote]
 
   def index
     @posts = Post.all
@@ -51,6 +52,18 @@ class PostsController < ApplicationController
     end
   end
 
+  def vote
+    # @post.votes << Vote.create(vote: params[:vote], user_id: session[:user_id])
+    @vote = Vote.create(voteable: @post, vote: params[:vote], user_id: session[:user_id])
+    
+    if @vote.valid?
+      flash[:notice] = "Your vote was counted" 
+    else 
+      flash[:error] = "Your vote was not counted. Something went wrong" 
+    end
+    redirect_to :back
+  end
+
   private
 
   def set_post
@@ -63,9 +76,21 @@ class PostsController < ApplicationController
   end
 
   def require_login_by_id
-    unless logged_in_as_post_creator?(@post)
+    unless logged_in_as_creator?(@post)
       flash[:error] = "You need to login as the content creator to complete that action"
       redirect_to login_path
     end
   end      
+
+  def one_vote_per_user
+    vote_array = @post.votes
+    vote_array.each do |vote_obj|
+      if session[:user_id] == vote_obj.user_id  
+        vote_obj.errors.add(:vote, "User can't vote more than once to same content")
+        flash[:error] = "You already voted!"
+        redirect_to :back and return
+      end  
+    end
+  end
+
 end

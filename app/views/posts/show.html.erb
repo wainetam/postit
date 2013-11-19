@@ -20,7 +20,7 @@
   <%= f.submit 'Create Comment', class: 'btn btn-primary' %>
 <% end %>
 
-<%= render 'posts/comments' %>
+<%= render 'shared/comments', object: @post %>
 
 
 <!-- url: post_comments_path -->
