@@ -1,5 +1,5 @@
 <div class="well">
-<%= form_for object do |f| %>
+<%= form_for obj do |f| %>
   <%= f.label :username, 'Username' %>
   <%= f.text_field :username %>
   <br />
@@ -9,6 +9,6 @@
   <br />
   <br />
   <!-- f.submit 'Register', class: 'btn btn-primary' -->
-  <%= f.submit object.new_record? ? "Register" : "Update Profile", class: 'btn btn-primary' %>
+  <%= f.submit obj.new_record? ? "Register" : "Update Profile", class: 'btn btn-primary' %>
 <% end %>
 </div>

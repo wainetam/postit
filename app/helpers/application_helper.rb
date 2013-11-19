@@ -21,13 +21,11 @@ module ApplicationHelper
   # end
 
   def logged_in_as_creator?(obj)
-    # debugger
-    # if obj == "@user" and session[:user_id] == obj.id
-    #   true
-    if session[:user_id] == obj.user_id
+    if obj.is_a?(User) && session[:user_id] == obj.id
+      true
+    elsif obj.respond_to?(:user_id) && session[:user_id] == obj.user_id
       true
     else
-      # debugger
       false
     end
   end

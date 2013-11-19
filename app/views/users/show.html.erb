@@ -6,8 +6,10 @@ Member since: <%= display_time(@user.created_at) %>
 <br />
 </div>
 
-<%= render 'shared/posts', object: @user.posts %>
+<%= render 'shared/posts', obj: @user.posts %>
 
-<%= render 'shared/comments', object: @user %>
+<%= render 'shared/comments', obj: @user %>
+
+<!-- need to access @user.posts individually for their comments or user.comments (except can't run post on user.comments; @user.posts[0].comments.post) -->
 
 <!-- object is @post.comments for post#show -->

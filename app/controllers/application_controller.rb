@@ -16,15 +16,15 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # def one_vote_per_user
-  #   vote_array = @obj.votes
-  #   vote_array.each do |vote_obj|
-  #     if session[:user_id] == vote_obj.user_id  
-  #       vote_obj.errors.add(:vote, "User can't vote more than once to same content")
-  #       flash[:error] = "You already voted!"
-  #       redirect_to :back and return
-  #     end  
-  #   end
-  # end
+  def one_vote_per_user(object)
+    vote_array = object.votes
+    vote_array.each do |vote_obj|
+      if session[:user_id] == vote_obj.user_id  
+        vote_obj.errors.add(:vote, "User can't vote more than once to same content")
+        flash[:error] = "You already voted!"
+        redirect_to :back and return
+      end  
+    end
+  end
 
 end

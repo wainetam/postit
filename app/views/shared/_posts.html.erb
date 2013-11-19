@@ -1,4 +1,4 @@
-<% object.each do |post| %>
+<% obj.each do |post| %>
 <div class="row">
   <div class="span0 well text-center">
     <% if logged_in? %>
@@ -29,7 +29,9 @@
     <br />
     <%= link_to post.url, fix_url(post.url) %>
     <br /> 
-    <%= link_to post.creator.username.to_s + " on " + display_time(post.created_at),  user_path(post.creator) %>
+    <%= "posted by" %>
+    <%= link_to post.creator.username.to_s, user_path(post.creator) %>
+    <%= "on " + display_time(post.created_at) %>
     <br />
     <%= link_to post.comments.size.to_s + " comments", post_path(post) %>
   </div>

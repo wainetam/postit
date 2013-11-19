@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
+  before_action :set_user, only: [:show, :edit, :update]
   before_action :require_login, except: [:new, :show]
-  # before_action :require_login_by_id, only: [:edit]
+  before_action :require_login_by_id, only: [:edit]
 
   def new
     @user = User.new
@@ -10,7 +11,6 @@ class UsersController < ApplicationController
     # @user = User.new(params[:user])
     @user = User.new(user_params)
     # @user = User.new
-    # debugger
 
     if @user.save
       flash[:notice] = "Thank you for registering, #{@user.username}"
@@ -21,17 +21,13 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
     # debugger
   end
 
   def edit
-    @user = User.find(params[:id])  
   end
 
   def update
-    @user = User.find(params[:id])
-
     if @user.update(user_params)
       flash[:notice] = "You have updated your user details"
       redirect_to user_path
@@ -41,6 +37,10 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def set_user
+    @user = User.find(params[:id])
+  end
 
   def user_params
   #   # params.require(:post).permit(:title, :url)

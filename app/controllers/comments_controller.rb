@@ -1,7 +1,9 @@
 class CommentsController < ApplicationController
   before_action :require_login, except: [:index, :show]
-  before_action :set_post, only: [:vote]
-  before_action :one_vote_per_user, only: [:vote]
+  before_action :set_comment, only: [:vote]
+  before_action only: [:vote] do 
+    one_vote_per_user(@comment)
+  end
   
   def create
     @post = Post.find(params[:post_id]) # find function takes an id
@@ -34,19 +36,19 @@ class CommentsController < ApplicationController
     params.require(:comment).permit!
   end
 
-  def set_post
+  def set_comment
     @comment = Comment.find(params[:id])
   end
 
-  def one_vote_per_user
-    vote_array = @comment.votes
-    vote_array.each do |vote_obj|
-      if session[:user_id] == vote_obj.user_id  
-        vote_obj.errors.add(:vote, "User can't vote more than once to same content")
-        flash[:error] = "You already voted!"
-        redirect_to :back and return
-      end  
-    end
-  end
+  # def one_vote_per_user
+  #   vote_array = @comment.votes
+  #   vote_array.each do |vote_obj|
+  #     if session[:user_id] == vote_obj.user_id  
+  #       vote_obj.errors.add(:vote, "User can't vote more than once to same content")
+  #       flash[:error] = "You already voted!"
+  #       redirect_to :back and return
+  #     end  
+  #   end
+  # end
 
 end

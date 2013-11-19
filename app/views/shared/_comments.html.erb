@@ -1,6 +1,6 @@
-<% if object.comments.any? %>
+<% if obj.comments.any? %>
   <h5>Comments:</h5>
-    <% object.comments.each do |c| %>
+    <% obj.comments.each do |c| %>
       <div class="row">
         <div class="span0 well text-center comment_votes">
           <% if logged_in? %>  
@@ -18,9 +18,15 @@
           <% end %>
         </div>
         <div class='well span8'>
-          <%= c.body %> 
+          <%= c.body %>
+          <% if obj == @user %>
+            <%= "on " %>
+            <%= link_to c.post.title.to_s, post_path(c.post) %>
+          <% end %>
           <br />
-          <%= link_to c.creator.username.to_s + " on " + display_time(c.created_at).to_s, user_path(c.creator) %>
+          <%= "by" %>
+          <%= link_to c.creator.username.to_s, user_path(c.creator) %>
+          <%= "on " + display_time(c.created_at).to_s %>
         </div>
       </div>
     <% end %>
